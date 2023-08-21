@@ -44,16 +44,18 @@ public final class RNCPPCodeModule
   /**
    *
    */
+  private static native double nativeMultiply(double a, double b);
+  private static native String nativeHttpGet(String url);
+
+  // Example method
+  // See https://reactnative.dev/docs/native-modules-android
   @ReactMethod
-  public void multiply(final int a, final int b, final Promise promise) {
-    long result = multiply(a, b);
-
-    final WritableMap response = Arguments.createMap();
-
-    response.putString("result", String.valueOf(result));
-
-    promise.resolve(response);
+  public void multiply(double a, double b, Promise promise) {
+    promise.resolve(nativeMultiply(a, b));
   }
 
-  public static native long multiply(long a, long b);
+  @ReactMethod
+  public void httpGet(String url, Promise promise) {
+    promise.resolve(nativeHttpGet(url));
+  }
 }
