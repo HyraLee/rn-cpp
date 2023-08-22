@@ -12,4 +12,5 @@ add_library(cpp-code
 # Specifies a path to native header files.
 include_directories(
             ../cpp-code/src/include
+	    ${CMAKE_CURRENT_SOURCE_DIR}/test/include
 )

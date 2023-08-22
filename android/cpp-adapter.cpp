@@ -18,5 +18,5 @@ Java_com_mariusreimer_rncppcode_RNCPPCodeModule_multiply(JNIEnv *env, jclass typ
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_mariusreimer_rncppcode_RNCPPCodeModule_httpGet(JNIEnv *env, jclass type, jstring url)
 {
-    return example::httpGet(url);
+    return example::httpGet(url, "");
 }

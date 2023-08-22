@@ -6,10 +6,12 @@
  */
 
 #import "RNCPPCode.h"
+#include "curl/curl.h"
 
 #pragma mark - RNCPPCode
 
 @implementation RNCPPCode
+
 
 RCT_EXPORT_MODULE();
 
@@ -34,7 +36,8 @@ RCT_EXPORT_METHOD(httpGet:(NSString *)url
 {
     @try {
         std::string urlStr = [url UTF8String]; // Convert NSString to std::string
-        std::string result = examples::httpGet(urlStr);
+        const std::string caFilePath = [[[NSBundle mainBundle] pathForResource:@"cacert" ofType:@"pem"] UTF8String];
+        std::string result = example::httpGet(urlStr, caFilePath);
         NSString *resultStr = [NSString stringWithUTF8String:result.c_str()]; // Convert std::string to NSString
         resolve(resultStr);
     } @catch (NSException *exception) {

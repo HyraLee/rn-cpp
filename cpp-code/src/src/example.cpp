@@ -1,4 +1,6 @@
 #include "example.h"
+#include <iostream>
+#include <string>
 
 namespace example
 {
@@ -13,23 +15,19 @@ namespace example
 		return size * nmemb;
 	}
 
-	std::string httpGet(std::string url)
+	std::string httpGet(std::string url, std::string caPath)
 	{
-		CURL *curl;
-		CURLcode res;
-
-		curl_global_init(CURL_GLOBAL_DEFAULT);
-
-		curl = curl_easy_init();
+		CURL *curl = curl_easy_init();
+		std::string response = "";
 		if (curl)
 		{
-			std::string response;
-
 			curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+			curl_easy_setopt(curl, CURLOPT_CAINFO, caPath.c_str());
+			curl_easy_setopt(curl, CURLOPT_PROTOCOLS,
+							 CURLPROTO_HTTP | CURLPROTO_HTTPS);
 			curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
 			curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
-
-			res = curl_easy_perform(curl);
+			CURLcode res = curl_easy_perform(curl);
 			if (res != CURLE_OK)
 			{
 				std::cerr << "curl_easy_perform() failed: "
@@ -40,14 +38,8 @@ namespace example
 				std::cout << "Response:\n"
 						  << response << std::endl;
 			}
-
-			curl_easy_cleanup(curl);
-			curl_global_cleanup();
-
 			return response;
 		}
-
-		curl_global_cleanup();
-		return "Response!!!";
+		return "";
 	}
 }
