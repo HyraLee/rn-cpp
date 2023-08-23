@@ -10,13 +10,13 @@
 using namespace std;
 
 extern "C" JNIEXPORT jlong JNICALL
-Java_com_mariusreimer_rncppcode_RNCPPCodeModule_multiply(JNIEnv *env, jclass type, jlong a, jlong b)
+Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeMultiply(JNIEnv *env, jclass type, jlong a, jlong b)
 {
     return example::multiply(a, b);
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_mariusreimer_rncppcode_RNCPPCodeModule_httpGet(JNIEnv *env, jclass type, jstring url)
+Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeHttpGet(JNIEnv *env, jclass type, jstring url)
 {
     const char *urlStr = env->GetStringUTFChars(url, nullptr);
     if (urlStr == nullptr)
