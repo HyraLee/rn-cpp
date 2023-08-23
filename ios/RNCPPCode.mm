@@ -36,8 +36,8 @@ RCT_EXPORT_METHOD(httpGet:(NSString *)url
 {
     @try {
         std::string urlStr = [url UTF8String]; // Convert NSString to std::string
-        const std::string caFilePath = [[[NSBundle mainBundle] pathForResource:@"cacert" ofType:@"pem"] UTF8String];
-        std::string result = example::httpGet(urlStr, caFilePath);
+        // const std::string caFilePath = [[[NSBundle mainBundle] pathForResource:@"cacert" ofType:@"pem"] UTF8String];
+        std::string result = example::httpGet(urlStr);
         NSString *resultStr = [NSString stringWithUTF8String:result.c_str()]; // Convert std::string to NSString
         resolve(resultStr);
     } @catch (NSException *exception) {

@@ -34,7 +34,7 @@ Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeHttpGet(JNIEnv *env, jclas
     // Now you can use urlCpp as a C++ std::string in your code
 
     // Example usage:
-    std::string result = example::httpGet(urlCpp, "");
+    std::string result = example::httpGet(urlCpp);
 
     // Convert the C++ std::string back to a jstring for return
     return env->NewStringUTF(result.c_str());
