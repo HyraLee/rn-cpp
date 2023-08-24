@@ -23,6 +23,7 @@ set_target_properties(curl PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_D
 include_directories(
             ../cpp-code/src/include
 	    ${CMAKE_CURRENT_SOURCE_DIR}/include
+		${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 find_library(z-lib z)
