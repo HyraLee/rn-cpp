@@ -13,7 +13,9 @@ Pod::Spec.new do |s|
   s.platforms    = { :ios => "9.0", :tvos => "9.2" }
 
   s.source       = { :git => "https://github.com/reime005/react-native-cpp-code.git", :tag => "s.version" }
-  s.source_files  = "ios/**/*.{h,mm}", "cpp-code/**/*.{cpp,h}", "cpp-code/src/include/curl/*.{h}", "cpp-code/src/include/openssl/*.{h}"
+  s.source_files  = "ios/**/*.{h,mm}", "cpp-code/**/*.{cpp,h}"
 
   s.dependency 'React'
+
+  s.xcconfig = { 'HEADER_SEARCH_PATHS' => '"$(PODS_TARGET_SRCROOT)/cpp-code/src/include"' }
 end
