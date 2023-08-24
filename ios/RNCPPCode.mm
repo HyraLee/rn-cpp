@@ -6,7 +6,6 @@
  */
 
 #import "RNCPPCode.h"
-#include "curl/curl.h"
 
 #pragma mark - RNCPPCode
 

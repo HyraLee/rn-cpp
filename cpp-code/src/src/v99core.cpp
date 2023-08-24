@@ -71,9 +71,6 @@ namespace v99core
 		if (curl)
 		{
 			curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-			//            curl_easy_setopt(curl, CURLOPT_CAINFO, caPath.c_str());
-			curl_easy_setopt(curl, CURLOPT_PROTOCOLS,
-							 CURLPROTO_HTTP | CURLPROTO_HTTPS);
 			curl_easy_setopt(curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
 			curl_easy_setopt(curl, CURLOPT_SSLCERTTYPE, "PEM");
 			curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
@@ -85,15 +82,16 @@ namespace v99core
 
 			curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
 			curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
 			CURLcode res = curl_easy_perform(curl);
 			if (res != CURLE_OK)
 			{
-				std::cerr << "curl_easy_perform() failed: "
+				std::cerr << "HTTP GET: curl_easy_perform() failed: "
 						  << curl_easy_strerror(res) << std::endl;
 			}
 			else
 			{
-				std::cout << "curl_easy_perform() success"
+				std::cout << "HTTP GET: curl_easy_perform() success!!!"
 						  << std::endl;
 			}
 			return response;
