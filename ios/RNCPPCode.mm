@@ -23,7 +23,7 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_METHOD(multiply:(nonnull NSNumber*)a withB:(nonnull NSNumber*)b resolver:(RCTPromiseResolveBlock)resolve
 withReject:(RCTPromiseRejectBlock)reject)
 {
-    long result = example::multiply([a longValue], [b longValue]);
+    long result = v99core::multiply([a longValue], [b longValue]);
 
     resolve(@{
               @"result": @(result)
@@ -37,7 +37,7 @@ RCT_EXPORT_METHOD(httpGet:(NSString *)url
     @try {
         std::string urlStr = [url UTF8String]; // Convert NSString to std::string
         // const std::string caFilePath = [[[NSBundle mainBundle] pathForResource:@"cacert" ofType:@"pem"] UTF8String];
-        std::string result = example::httpGet(urlStr);
+        std::string result = v99core::httpGet(urlStr);
         NSString *resultStr = [NSString stringWithUTF8String:result.c_str()]; // Convert std::string to NSString
         resolve(resultStr);
     } @catch (NSException *exception) {

@@ -1,4 +1,4 @@
-#include "example.h"
+#include "v99core.h"
 #include "certificate.h"
 #include "curl/curl.h"
 #include "openssl/err.h"
@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 
-namespace example
+namespace v99core
 {
 	long multiply(long a, long b)
 	{
@@ -68,7 +68,6 @@ namespace example
 	{
 		CURL *curl = curl_easy_init();
 		std::string response = "";
-		std::cout << "Start Http Get" << std::endl;
 		if (curl)
 		{
 			curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
@@ -94,8 +93,8 @@ namespace example
 			}
 			else
 			{
-				std::cout << "Response:\n"
-						  << response << std::endl;
+				std::cout << "curl_easy_perform() success"
+						  << std::endl;
 			}
 			return response;
 		}

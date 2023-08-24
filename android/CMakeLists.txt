@@ -5,7 +5,7 @@ set (CMAKE_CXX_STANDARD 11)
 
 add_library(cpp-code
             SHARED
-            ../cpp-code/src/src/example.cpp
+            ../cpp-code/src/src/v99core.cpp
             cpp-adapter.cpp
 )
 

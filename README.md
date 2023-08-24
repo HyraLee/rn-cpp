@@ -6,12 +6,12 @@ Repo demo cho việc xây dựng một native module C++ cho React Native
 
 - Tích hợp C++ cho native module thông qua Objective C++ (.mm file)
 
-- Sử dụng preprocessor directive __cplusplus để wrap code C++:
+- Sử dụng preprocessor directive \_\_cplusplus để wrap code C++:
 
 ```bash
         #ifdef __cplusplus
 
-        #import "example.h"
+        #import "v99core.h"
 
         #endif
 
@@ -78,6 +78,6 @@ Repo demo cho việc xây dựng một native module C++ cho React Native
 extern "C"
 JNIEXPORT jlong JNICALL
 Java_com_mariusreimer_rncppcode_RNCPPCodeModule_multiply(JNIEnv *env, jclass type, jlong a, jlong b) {
-    return example::multiply(a, b);
+    return v99core::multiply(a, b);
 }
 ```

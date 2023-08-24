@@ -21,7 +21,7 @@
 
 #ifdef __cplusplus
 
-#import "example.h"
+#import "v99core.h"
 
 #endif
 

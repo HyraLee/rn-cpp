@@ -5,14 +5,14 @@
 #include <iostream>
 #include <jni.h>
 #include <android/log.h>
-#include "example.h"
+#include "v99core.h"
 
 using namespace std;
 
 extern "C" JNIEXPORT jlong JNICALL
 Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeMultiply(JNIEnv *env, jclass type, jlong a, jlong b)
 {
-    return example::multiply(a, b);
+    return v99core::multiply(a, b);
 }
 
 extern "C" JNIEXPORT jstring JNICALL
@@ -34,7 +34,7 @@ Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeHttpGet(JNIEnv *env, jclas
     // Now you can use urlCpp as a C++ std::string in your code
 
     // Example usage:
-    std::string result = example::httpGet(urlCpp);
+    std::string result = v99core::httpGet(urlCpp);
 
     // Convert the C++ std::string back to a jstring for return
     return env->NewStringUTF(result.c_str());
