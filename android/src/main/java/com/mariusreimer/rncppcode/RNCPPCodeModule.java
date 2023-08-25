@@ -46,6 +46,8 @@ public final class RNCPPCodeModule
    */
   private static native double nativeMultiply(double a, double b);
   private static native String nativeHttpGet(String url);
+  private static native String nativeHttpPost(String url, String pararm);
+  private static native String nativeHttpDelete(String url);
 
   // Example method
   // See https://reactnative.dev/docs/native-modules-android
@@ -57,5 +59,15 @@ public final class RNCPPCodeModule
   @ReactMethod
   public void httpGet(String url, Promise promise) {
     promise.resolve(nativeHttpGet(url));
+  }
+
+  @ReactMethod
+  public void httpPost(String url, String pararm, Promise promise) {
+    promise.resolve(nativeHttpPost(url, pararm));
+  }
+
+  @ReactMethod
+  public void httpDelete(String url, Promise promise) {
+    promise.resolve(nativeHttpDelete(url));
   }
 }

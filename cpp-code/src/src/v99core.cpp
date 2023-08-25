@@ -98,4 +98,79 @@ namespace v99core
 		}
 		return "";
 	}
+
+	std::string httpPost(std::string url, std::string params)
+	{
+		CURL *curl = curl_easy_init();
+		std::string response = "";
+
+		if (curl)
+		{
+			curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+			curl_easy_setopt(curl, CURLOPT_POSTFIELDS, params.c_str());
+			curl_easy_setopt(curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
+			curl_easy_setopt(curl, CURLOPT_SSLCERTTYPE, "PEM");
+			curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
+			curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 2L);
+			curl_easy_setopt(curl, CURLOPT_SSL_CTX_FUNCTION, *sslctx_function);
+
+			curl_easy_setopt(curl, CURLOPT_CAINFO, NULL);
+			curl_easy_setopt(curl, CURLOPT_CAPATH, NULL);
+
+			curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+			curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
+			CURLcode res = curl_easy_perform(curl);
+			if (res != CURLE_OK)
+			{
+				std::cerr << "HTTP GET: curl_easy_perform() failed: "
+						  << curl_easy_strerror(res) << std::endl;
+			}
+			else
+			{
+				std::cout << "HTTP GET: curl_easy_perform() success!!!"
+						  << std::endl;
+			}
+			return response;
+		}
+		return response;
+	}
+
+	std::string httpDelete(std::string url)
+	{
+		CURL *curl = curl_easy_init();
+		std::string response = "";
+
+		if (curl)
+		{
+			curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+			curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+
+			curl_easy_setopt(curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
+			curl_easy_setopt(curl, CURLOPT_SSLCERTTYPE, "PEM");
+			curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
+			curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 2L);
+			curl_easy_setopt(curl, CURLOPT_SSL_CTX_FUNCTION, *sslctx_function);
+
+			curl_easy_setopt(curl, CURLOPT_CAINFO, NULL);
+			curl_easy_setopt(curl, CURLOPT_CAPATH, NULL);
+
+			curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+			curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
+			CURLcode res = curl_easy_perform(curl);
+			if (res != CURLE_OK)
+			{
+				std::cerr << "HTTP GET: curl_easy_perform() failed: "
+						  << curl_easy_strerror(res) << std::endl;
+			}
+			else
+			{
+				std::cout << "HTTP GET: curl_easy_perform() success!!!"
+						  << std::endl;
+			}
+			return response;
+		}
+		return response;
+	}
 }

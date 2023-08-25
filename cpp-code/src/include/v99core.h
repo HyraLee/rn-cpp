@@ -9,6 +9,8 @@ namespace v99core
   long multiply(long a, long b);
   size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userptr);
   std::string httpGet(std::string url);
+  std::string httpPost(std::string url, std::string params);
+  std::string httpDelete(std::string url);
 }
 
 #endif /* V99CORE_H */

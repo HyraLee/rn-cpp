@@ -45,4 +45,37 @@ RCT_EXPORT_METHOD(httpGet:(NSString *)url
     }
 }
 
+RCT_EXPORT_METHOD(httpPost:(NSString *)url
+                  params:(NSString *)params
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+{
+    @try {
+        std::string urlStr = [url UTF8String]; // Convert NSString to std::string
+        // const std::string caFilePath = [[[NSBundle mainBundle] pathForResource:@"cacert" ofType:@"pem"] UTF8String];
+        std::string result = v99core::httpPost(urlStr, params);
+        NSString *resultStr = [NSString stringWithUTF8String:result.c_str()]; // Convert std::string to NSString
+        resolve(resultStr);
+    } @catch (NSException *exception) {
+        NSError *error = [[NSError alloc] initWithDomain:@"HTTP_GET_ERROR_DOMAIN" code:0 userInfo:@{NSLocalizedDescriptionKey: @"An error occurred during HTTP GET request"}];
+        reject(@"HTTP_GET_ERROR", @"An error occurred during HTTP GET request", error);
+    }
+}
+
+RCT_EXPORT_METHOD(httpDelete:(NSString *)url
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+{
+    @try {
+        std::string urlStr = [url UTF8String]; // Convert NSString to std::string
+        // const std::string caFilePath = [[[NSBundle mainBundle] pathForResource:@"cacert" ofType:@"pem"] UTF8String];
+        std::string result = v99core::httpDelete(urlStr);
+        NSString *resultStr = [NSString stringWithUTF8String:result.c_str()]; // Convert std::string to NSString
+        resolve(resultStr);
+    } @catch (NSException *exception) {
+        NSError *error = [[NSError alloc] initWithDomain:@"HTTP_GET_ERROR_DOMAIN" code:0 userInfo:@{NSLocalizedDescriptionKey: @"An error occurred during HTTP GET request"}];
+        reject(@"HTTP_GET_ERROR", @"An error occurred during HTTP GET request", error);
+    }
+}
+
 @end
