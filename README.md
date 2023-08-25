@@ -65,7 +65,7 @@ Repo demo cho việc xây dựng một native module C++ cho React Native
 
 - Mở rộng build.gradle để build libary.
 
-- Tạo file CMakeLists.txt để khai báo file code C++
+- Tạo file CMakeLists.txt để khai báo code C++
 
 - Khai báo interface cho code C++
 
@@ -81,3 +81,21 @@ Java_com_mariusreimer_rncppcode_RNCPPCodeModule_multiply(JNIEnv *env, jclass typ
     return v99core::multiply(a, b);
 }
 ```
+
+## Tích hợp module C++ vào React Native
+
+- Xây dựng một native module cho c++, tích hợp thông qua objective-C cho ios và JNI cho android.
+  (Chi tiết đọc ở file README.md của repo native module)
+
+- Ở project mẫu, khai báo dependencies cho native module. Ví dụ:
+
+```bash
+      "dependencies": {
+         "react": "18.2.0",
+         "react-native": "0.72.3",
+         # khai báo native module
+         "react-native-ccode": "git+https://git@github.com/HyraLee/rn-cpp.git"
+      },
+```
+
+- Setup và chạy project.
