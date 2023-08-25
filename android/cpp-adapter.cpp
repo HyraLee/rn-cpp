@@ -35,7 +35,7 @@ Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeHttpPost(JNIEnv *env, jcla
 {
     const char *urlStr = env->GetStringUTFChars(url, nullptr);
     const char *paramStr = env->GetStringUTFChars(param, nullptr);
-    if (urlStr == nullptr)
+    if (urlStr == nullptr || paramStr == nullptr)
     {
         return env->NewStringUTF("Error converting jstring to const char*");
     }
