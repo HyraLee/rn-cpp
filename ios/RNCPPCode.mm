@@ -52,8 +52,9 @@ RCT_EXPORT_METHOD(httpPost:(NSString *)url
 {
     @try {
         std::string urlStr = [url UTF8String]; // Convert NSString to std::string
+        std::string paramsStr = [params UTF8String]; // Convert NSString params to std::string
         // const std::string caFilePath = [[[NSBundle mainBundle] pathForResource:@"cacert" ofType:@"pem"] UTF8String];
-        std::string result = v99core::httpPost(urlStr, params);
+        std::string result = v99core::httpPost(urlStr, paramsStr);
         NSString *resultStr = [NSString stringWithUTF8String:result.c_str()]; // Convert std::string to NSString
         resolve(resultStr);
     } @catch (NSException *exception) {
