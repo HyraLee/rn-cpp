@@ -5,7 +5,7 @@ set (CMAKE_CXX_STANDARD 11)
 
 add_library(cpp-code
             SHARED
-            ../cpp-code/src/src/v99core.cpp
+            # ../cpp-code/src/src/v99core.cpp
             cpp-adapter.cpp
 )
 
@@ -13,11 +13,12 @@ add_library(crypto STATIC IMPORTED)
 add_library(openssl STATIC IMPORTED)
 add_library(nghttp2 STATIC IMPORTED)
 add_library(curl STATIC IMPORTED)
+add_library(v99core STATIC IMPORTED)
 
 set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}/libcrypto.a)
 set_target_properties(openssl PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}/libssl.a)
 set_target_properties(nghttp2 PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}/libnghttp2.a)
-set_target_properties(curl PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}/libcurl.a)
+set_target_properties(curl PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}/libv99core.a)
 
 # Specifies a path to native header files.
 include_directories(
