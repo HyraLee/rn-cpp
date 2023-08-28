@@ -79,4 +79,23 @@ RCT_EXPORT_METHOD(httpDelete:(NSString *)url
     }
 }
 
+////////////////////////////////////////////////////
+////////////     V99 CORE APP           ////////////
+////////////////////////////////////////////////////
+
+RCT_EXPORT_METHOD(getPlatform:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+{
+    @try {
+        std::string urlStr = [url UTF8String]; // Convert NSString to std::string
+        // const std::string caFilePath = [[[NSBundle mainBundle] pathForResource:@"cacert" ofType:@"pem"] UTF8String];
+        std::string result = v99core::getPlatForm();
+        NSString *resultStr = [NSString stringWithUTF8String:result.c_str()]; // Convert std::string to NSString
+        resolve(resultStr);
+    } @catch (NSException *exception) {
+        NSError *error = [[NSError alloc] initWithDomain:@"HTTP_GET_ERROR_DOMAIN" code:0 userInfo:@{NSLocalizedDescriptionKey: @"An error occurred during HTTP GET request"}];
+        reject(@"HTTP_GET_ERROR", @"An error occurred during HTTP GET request", error);
+    }
+}
+
 @end

@@ -8,9 +8,22 @@ namespace v99core
 {
   long multiply(long a, long b);
   size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userptr);
+
+  ////////////////////////////////////////////////////
+  //////////          HTTP REQUEST         ///////////
+  ////////////////////////////////////////////////////
   std::string httpGet(std::string url);
   std::string httpPost(std::string url, std::string params);
   std::string httpDelete(std::string url);
+
+  ////////////////////////////////////////////////////
+  //////////             CORE V99          ///////////
+  ////////////////////////////////////////////////////
+  bool init(const std::string &appId, const std::string &secretKey);
+  void on(const std::string &appId);
+  void exec(const std::string &redId, const std::string &actionType);
+  std::string getPlatform();
+
 }
 
 #endif /* V99CORE_H */

@@ -44,13 +44,20 @@ public final class RNCPPCodeModule
   /**
    *
    */
+  // HTTP REQUEST
   private static native double nativeMultiply(double a, double b);
   private static native String nativeHttpGet(String url);
   private static native String nativeHttpPost(String url, String pararm);
   private static native String nativeHttpDelete(String url);
+  // CORE V99
+  private static native String nativeGetPlatform();
 
   // Example method
   // See https://reactnative.dev/docs/native-modules-android
+
+  ////////////////////////////////////////////////////
+  //////////           HTTP REQUEST          /////////
+  ////////////////////////////////////////////////////
   @ReactMethod
   public void multiply(double a, double b, Promise promise) {
     promise.resolve(nativeMultiply(a, b));
@@ -69,5 +76,13 @@ public final class RNCPPCodeModule
   @ReactMethod
   public void httpDelete(String url, Promise promise) {
     promise.resolve(nativeHttpDelete(url));
+  }
+
+  ////////////////////////////////////////////////////
+  //////////             CORE V99          ///////////
+  ////////////////////////////////////////////////////
+  @ReactMethod
+  public void getPlatform(String url, Promise promise) {
+    promise.resolve(nativeGetPlatform());
   }
 }

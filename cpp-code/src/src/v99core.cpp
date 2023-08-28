@@ -173,4 +173,15 @@ namespace v99core
 		}
 		return response;
 	}
+
+	std::string getPlatform()
+	{
+#if defined(TARGET_OS_IOS)
+		return "iOS";
+#endif
+#if defined(__ANDROID__)
+		return "Android";
+#endif
+		return "iOS";
+	}
 }

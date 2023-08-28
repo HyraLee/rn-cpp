@@ -62,3 +62,14 @@ Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeHttpDelete(JNIEnv *env, jc
     std::string result = v99core::httpDelete(urlCpp);
     return env->NewStringUTF(result.c_str());
 }
+
+////////////////////////////////////////////////////
+////////////     V99 CORE APP           ////////////
+////////////////////////////////////////////////////
+
+extern "C" JNIEXPORT jstring JNICALL
+Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeGetPlatform(JNIEnv *env, jclass type)
+{
+    std::string result = v99core::getPlatform(urlCpp);
+    return env->NewStringUTF(result.c_str());
+}
