@@ -70,6 +70,6 @@ Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeHttpDelete(JNIEnv *env, jc
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeGetPlatform(JNIEnv *env, jclass type)
 {
-    std::string result = v99core::getPlatform(urlCpp);
+    std::string result = v99core::getPlatform();
     return env->NewStringUTF(result.c_str());
 }

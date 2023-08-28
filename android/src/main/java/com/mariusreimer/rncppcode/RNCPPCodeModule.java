@@ -82,7 +82,7 @@ public final class RNCPPCodeModule
   //////////             CORE V99          ///////////
   ////////////////////////////////////////////////////
   @ReactMethod
-  public void getPlatform(String url, Promise promise) {
+  public void getPlatform(Promise promise) {
     promise.resolve(nativeGetPlatform());
   }
 }

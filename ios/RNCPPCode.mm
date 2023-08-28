@@ -89,7 +89,7 @@ RCT_EXPORT_METHOD(getPlatform:(RCTPromiseResolveBlock)resolve
     @try {
         std::string urlStr = [url UTF8String]; // Convert NSString to std::string
         // const std::string caFilePath = [[[NSBundle mainBundle] pathForResource:@"cacert" ofType:@"pem"] UTF8String];
-        std::string result = v99core::getPlatForm();
+        std::string result = v99core::getPlatform();
         NSString *resultStr = [NSString stringWithUTF8String:result.c_str()]; // Convert std::string to NSString
         resolve(resultStr);
     } @catch (NSException *exception) {
