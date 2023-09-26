@@ -9,8 +9,31 @@
 
 using namespace std;
 
-extern "C" JNIEXPORT jlong JNICALL
-Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeMultiply(JNIEnv *env, jclass type, jlong a, jlong b)
+//  Fix issues with clang compiler
+
+#undef stderr
+FILE *stderr = &__sF[2];
+
+#undef stdin
+FILE *stdin = &__sF[0];
+
+extern "C"
+{
+    void __stack_chk_fail(void)
+    {
+        abort();
+    }
+    /* On some architectures, this helps needless PIC pointer setup
+       that would be needed just for the __stack_chk_fail call.  */
+
+    void __stack_chk_fail_local(void)
+    {
+        __stack_chk_fail();
+    }
+}
+
+extern "C" JNIEXPORT jdouble JNICALL
+Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeMultiply(JNIEnv *env, jclass type, jdouble a, jdouble b)
 {
     return v99core::multiply(a, b);
 }

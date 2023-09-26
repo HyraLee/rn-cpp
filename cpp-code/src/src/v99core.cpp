@@ -8,6 +8,14 @@
 
 namespace v99core
 {
+	std::atomic<bool> cancelRequest(false);
+
+	// Function to cancel the HTTP request
+	void CancelHttpRequest()
+	{
+		cancelRequest.store(true);
+	}
+
 	long multiply(long a, long b)
 	{
 		return a * b;
