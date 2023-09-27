@@ -86,6 +86,24 @@ Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeHttpDelete(JNIEnv *env, jc
     return env->NewStringUTF(result.c_str());
 }
 
+extern "C" JNIEXPORT jboolean JNICALL
+Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeSetHeader(JNIEnv *env, jclass type, jstring headerOptions)
+{
+    const char *headerOptionsStr = env->GetStringUTFChars(headerOptions, nullptr);
+    if (headerOptionsStr == nullptr)
+    {
+        // Handle error, possibly by throwing an exception or returning a default value
+        return JNI_FALSE;
+    }
+
+    std::string headerCpp(headerOptionsStr);
+    env->ReleaseStringUTFChars(headerOptions, headerOptionsStr);
+
+    bool result = v99core::httpDelete(headerCpp);
+
+    return static_cast<jboolean>(result); // Convert the bool to a jboolean
+}
+
 ////////////////////////////////////////////////////
 ////////////     V99 CORE APP           ////////////
 ////////////////////////////////////////////////////

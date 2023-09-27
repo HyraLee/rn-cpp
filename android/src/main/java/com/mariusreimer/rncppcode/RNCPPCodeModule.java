@@ -78,6 +78,11 @@ public final class RNCPPCodeModule
     promise.resolve(nativeHttpDelete(url));
   }
 
+  @ReactMethod
+  public void setHeader(String headerOptions, Promise promise) {
+    promise.resolve(nativeHttpDelete(headerOptions));
+  }
+
   ////////////////////////////////////////////////////
   //////////             CORE V99          ///////////
   ////////////////////////////////////////////////////

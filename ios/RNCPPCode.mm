@@ -79,6 +79,23 @@ RCT_EXPORT_METHOD(httpDelete:(NSString *)url
     }
 }
 
+RCT_EXPORT_METHOD(setHeader:(NSString *)headerOptions
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+{
+    @try {
+        std::string header = [headerOptions UTF8String]; // Convert NSString to std::string
+        // const std::string caFilePath = [[[NSBundle mainBundle] pathForResource:@"cacert" ofType:@"pem"] UTF8String];
+        bool result = v99core::setHeader(header);
+        NSNumber *resultNumber = [NSNumber numberWithBool:result];
+
+        resolve(resultNumber);
+    } @catch (NSException *exception) {
+        NSError *error = [[NSError alloc] initWithDomain:@"SET_HEADER_ERROR_DOMAIN" code:0 userInfo:@{NSLocalizedDescriptionKey: @"An error occurred during HTTP GET request"}];
+        reject(@"SET_HEADER_ERROR", @"An error occurred during SET HEADER request", error);
+    }
+}
+
 ////////////////////////////////////////////////////
 ////////////     V99 CORE APP           ////////////
 ////////////////////////////////////////////////////

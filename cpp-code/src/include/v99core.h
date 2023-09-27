@@ -8,13 +8,14 @@ namespace v99core
 {
   long multiply(long a, long b);
   size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userptr);
-
+  struct curl_slist *headers = NULL;
   ////////////////////////////////////////////////////
   //////////          HTTP REQUEST         ///////////
   ////////////////////////////////////////////////////
   std::string httpGet(std::string url);
   std::string httpPost(std::string url, std::string params);
   std::string httpDelete(std::string url);
+  bool setHeader(std::string headerOption);
 
   ////////////////////////////////////////////////////
   //////////             CORE V99          ///////////
@@ -23,7 +24,6 @@ namespace v99core
   void on(const std::string &appId);
   void exec(const std::string &redId, const std::string &actionType);
   std::string getPlatform();
-
 }
 
 #endif /* V99CORE_H */
