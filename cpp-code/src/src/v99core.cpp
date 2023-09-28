@@ -137,6 +137,7 @@ namespace v99core
 				std::cerr << "HTTP GET: curl_easy_perform() failed: "
 						  << "request cancelled" << std::endl;
 				openHttpRequest();
+				return ERR_REQUEST_CANCELLED;
 			}
 			else if (res != CURLE_OK)
 			{
@@ -183,6 +184,7 @@ namespace v99core
 				std::cerr << "HTTP GET: curl_easy_perform() failed: "
 						  << "request cancelled" << std::endl;
 				openHttpRequest();
+				return ERR_REQUEST_CANCELLED;
 			}
 			else if (res != CURLE_OK)
 			{
@@ -232,6 +234,7 @@ namespace v99core
 				std::cerr << "HTTP GET: curl_easy_perform() failed: "
 						  << "request cancelled" << std::endl;
 				openHttpRequest();
+				return ERR_REQUEST_CANCELLED;
 			}
 			else if (res != CURLE_OK)
 			{

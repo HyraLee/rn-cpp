@@ -37,8 +37,15 @@ RCT_EXPORT_METHOD(httpGet:(NSString *)url
         std::string urlStr = [url UTF8String]; // Convert NSString to std::string
         // const std::string caFilePath = [[[NSBundle mainBundle] pathForResource:@"cacert" ofType:@"pem"] UTF8String];
         std::string result = v99core::httpGet(urlStr);
-        NSString *resultStr = [NSString stringWithUTF8String:result.c_str()]; // Convert std::string to NSString
-        resolve(resultStr);
+        if(result == v99core::ERR_REQUEST_CANCELLED)
+        {
+            reject(@"HTTP_GET_ERROR", @"request cancelled!!!");
+        }
+        else
+        {
+            NSString *resultStr = [NSString stringWithUTF8String:result.c_str()]; // Convert std::string to NSString
+            resolve(resultStr);
+        }
     } @catch (NSException *exception) {
         NSError *error = [[NSError alloc] initWithDomain:@"HTTP_GET_ERROR_DOMAIN" code:0 userInfo:@{NSLocalizedDescriptionKey: @"An error occurred during HTTP GET request"}];
         reject(@"HTTP_GET_ERROR", @"An error occurred during HTTP GET request", error);
@@ -55,8 +62,15 @@ RCT_EXPORT_METHOD(httpPost:(NSString *)url
         std::string paramsStr = [params UTF8String]; // Convert NSString params to std::string
         // const std::string caFilePath = [[[NSBundle mainBundle] pathForResource:@"cacert" ofType:@"pem"] UTF8String];
         std::string result = v99core::httpPost(urlStr, paramsStr);
-        NSString *resultStr = [NSString stringWithUTF8String:result.c_str()]; // Convert std::string to NSString
-        resolve(resultStr);
+        if(result == v99core::ERR_REQUEST_CANCELLED)
+        {
+            reject(@"HTTP_GET_ERROR", @"request cancelled!!!");
+        }
+        else
+        {
+            NSString *resultStr = [NSString stringWithUTF8String:result.c_str()]; // Convert std::string to NSString
+            resolve(resultStr);
+        }
     } @catch (NSException *exception) {
         NSError *error = [[NSError alloc] initWithDomain:@"HTTP_GET_ERROR_DOMAIN" code:0 userInfo:@{NSLocalizedDescriptionKey: @"An error occurred during HTTP GET request"}];
         reject(@"HTTP_GET_ERROR", @"An error occurred during HTTP GET request", error);
@@ -87,9 +101,15 @@ RCT_EXPORT_METHOD(setHeader:(NSString *)headerOptions
         std::string header = [headerOptions UTF8String]; // Convert NSString to std::string
         // const std::string caFilePath = [[[NSBundle mainBundle] pathForResource:@"cacert" ofType:@"pem"] UTF8String];
         bool result = v99core::setHeader(header);
-        NSNumber *resultNumber = [NSNumber numberWithBool:result];
-
-        resolve(resultNumber);
+        if(result == v99core::ERR_REQUEST_CANCELLED)
+        {
+            reject(@"HTTP_GET_ERROR", @"request cancelled!!!");
+        }
+        else
+        {
+            NSString *resultStr = [NSString stringWithUTF8String:result.c_str()]; // Convert std::string to NSString
+            resolve(resultStr);
+        }
     } @catch (NSException *exception) {
         NSError *error = [[NSError alloc] initWithDomain:@"SET_HEADER_ERROR_DOMAIN" code:0 userInfo:@{NSLocalizedDescriptionKey: @"An error occurred during HTTP GET request"}];
         reject(@"SET_HEADER_ERROR", @"An error occurred during SET HEADER request", error);
@@ -102,7 +122,6 @@ RCT_EXPORT_METHOD(cancelRequest:(RCTPromiseResolveBlock)resolve
     @try {
         bool result = v99core::cancelHttpRequest();
         NSNumber *resultNumber = [NSNumber numberWithBool:result];
-
         resolve(resultNumber);
     } @catch (NSException *exception) {
         NSError *error = [[NSError alloc] initWithDomain:@"SET_HEADER_ERROR_DOMAIN" code:0 userInfo:@{NSLocalizedDescriptionKey: @"An error occurred during HTTP GET request"}];

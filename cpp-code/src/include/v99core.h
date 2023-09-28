@@ -9,6 +9,7 @@ namespace v99core
   ////////////////////////////////////////////////////
   //////////          UTILITIES         /////////////
   ////////////////////////////////////////////////////
+  const std::string ERR_REQUEST_CANCELLED = "REQUEST_CANCELLED!";
   std::atomic<bool> cancelRequested(false);
   long multiply(long a, long b);
   size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userptr);
