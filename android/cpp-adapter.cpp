@@ -107,7 +107,7 @@ Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeSetHeader(JNIEnv *env, jcl
 extern "C" JNIEXPORT jboolean JNICALL
 Java_com_mariusreimer_rncppcode_RNCPPCodeModule_nativeCancelRequest(JNIEnv *env, jclass type)
 {
-    bool result = v99core::cancelRequest();
+    bool result = v99core::cancelHttpRequest();
 
     return static_cast<jboolean>(result); // Convert the bool to a jboolean
 }

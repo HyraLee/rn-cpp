@@ -6,6 +6,9 @@
 
 namespace v99core
 {
+  ////////////////////////////////////////////////////
+  //////////          UTILITIES         /////////////
+  ////////////////////////////////////////////////////
   std::atomic<bool> cancelRequested(false);
   long multiply(long a, long b);
   size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userptr);
@@ -17,8 +20,8 @@ namespace v99core
   std::string httpPost(std::string url, std::string params);
   std::string httpDelete(std::string url);
   bool setHeader(std::string headerOption);
-  bool cancelRequest();
-
+  bool cancelHttpRequest();
+  bool openHttpRequest();
   ////////////////////////////////////////////////////
   //////////             CORE V99    ///////////
   ////////////////////////////////////////////////////

@@ -100,7 +100,7 @@ RCT_EXPORT_METHOD(cancelRequest:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 {
     @try {
-        bool result = v99core::cancelRequest();
+        bool result = v99core::cancelHttpRequest();
         NSNumber *resultNumber = [NSNumber numberWithBool:result];
 
         resolve(resultNumber);

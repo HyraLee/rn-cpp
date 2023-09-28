@@ -8,17 +8,6 @@
 
 namespace v99core
 {
-
-	void cancelHttpRequest()
-	{
-		cancelRequested.store(true); // Set the cancellation flag
-	}
-
-	void openHttpRequest()
-	{
-		cancelRequested.store(false); // Set the open flag
-	}
-
 	long multiply(long a, long b)
 	{
 		return a * b;
@@ -28,6 +17,39 @@ namespace v99core
 	{
 		((std::string *)userptr)->append((char *)contents, size * nmemb);
 		return size * nmemb;
+	}
+
+	bool setHeader(std::string headerOption)
+	{
+		headers = NULL; // Initialize headers as NULL or reset it if needed
+		if (headers)
+		{
+			curl_slist_free_all(headers); // Free previously set headers
+			headers = NULL;				  // Reset to NULL
+		}
+
+		// Remove {} from the headerOption
+		headerOption.erase(headerOption.begin());
+		headerOption.pop_back();
+
+		// Read options in header
+		char *p;
+		p = std::strtok(&headerOption[0], ","); // Use &headerOption[0] to get a pointer to the string's character array
+		while (p)
+		{
+			headers = curl_slist_append(headers, p);
+			p = std::strtok(NULL, ","); // Use NULL for subsequent calls to strtok
+		}
+
+		// Optionally, you may want to check for errors or return a boolean
+		if (headers)
+		{
+			return true; // Headers were successfully set
+		}
+		else
+		{
+			return false; // Headers setting failed
+		}
 	}
 
 	static CURLcode sslctx_function(CURL *curl, void *sslctx, void *parm)
@@ -75,6 +97,18 @@ namespace v99core
 		return rv;
 	}
 
+	bool cancelHttpRequest()
+	{
+		cancelRequested.store(true); // Set the cancellation flag
+		return true;
+	}
+
+	bool openHttpRequest()
+	{
+		cancelRequested.store(false); // Set the open flag
+		return true;
+	}
+
 	std::string httpGet(std::string url)
 	{
 		CURL *curl = curl_easy_init();
@@ -98,15 +132,16 @@ namespace v99core
 			curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
 			CURLcode res = curl_easy_perform(curl);
-			if (res != CURLE_OK)
-			{
-				std::cerr << "HTTP GET: curl_easy_perform() failed: "
-						  << curl_easy_strerror(res) << std::endl;
-			}
-			else if (cancelRequested.load())
+			if (cancelRequested.load())
 			{
 				std::cerr << "HTTP GET: curl_easy_perform() failed: "
 						  << "request cancelled" << std::endl;
+				openHttpRequest();
+			}
+			else if (res != CURLE_OK)
+			{
+				std::cerr << "HTTP GET: curl_easy_perform() failed: "
+						  << curl_easy_strerror(res) << std::endl;
 			}
 			else
 			{
@@ -143,16 +178,16 @@ namespace v99core
 			curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
 			CURLcode res = curl_easy_perform(curl);
-
-			if (res != CURLE_OK)
-			{
-				std::cerr << "HTTP GET: curl_easy_perform() failed: "
-						  << curl_easy_strerror(res) << std::endl;
-			}
-			else if (cancelRequested.load())
+			if (cancelRequested.load())
 			{
 				std::cerr << "HTTP GET: curl_easy_perform() failed: "
 						  << "request cancelled" << std::endl;
+				openHttpRequest();
+			}
+			else if (res != CURLE_OK)
+			{
+				std::cerr << "HTTP GET: curl_easy_perform() failed: "
+						  << curl_easy_strerror(res) << std::endl;
 			}
 			else
 			{
@@ -162,45 +197,6 @@ namespace v99core
 			return response;
 		}
 		return response;
-	}
-
-	bool setHeader(std::string headerOption)
-	{
-		headers = NULL; // Initialize headers as NULL or reset it if needed
-		if (headers)
-		{
-			curl_slist_free_all(headers); // Free previously set headers
-			headers = NULL;				  // Reset to NULL
-		}
-
-		// Remove {} from the headerOption
-		headerOption.erase(headerOption.begin());
-		headerOption.pop_back();
-
-		// Read options in header
-		char *p;
-		p = std::strtok(&headerOption[0], ","); // Use &headerOption[0] to get a pointer to the string's character array
-		while (p)
-		{
-			headers = curl_slist_append(headers, p);
-			p = std::strtok(NULL, ","); // Use NULL for subsequent calls to strtok
-		}
-
-		// Optionally, you may want to check for errors or return a boolean
-		if (headers)
-		{
-			return true; // Headers were successfully set
-		}
-		else
-		{
-			return false; // Headers setting failed
-		}
-	}
-
-	bool cancelRequest()
-	{
-
-		return true;
 	}
 
 	std::string httpDelete(std::string url)
@@ -231,15 +227,16 @@ namespace v99core
 			curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
 			CURLcode res = curl_easy_perform(curl);
-			if (res != CURLE_OK)
-			{
-				std::cerr << "HTTP GET: curl_easy_perform() failed: "
-						  << curl_easy_strerror(res) << std::endl;
-			}
-			else if (cancelRequested.load())
+			if (cancelRequested.load())
 			{
 				std::cerr << "HTTP GET: curl_easy_perform() failed: "
 						  << "request cancelled" << std::endl;
+				openHttpRequest();
+			}
+			else if (res != CURLE_OK)
+			{
+				std::cerr << "HTTP GET: curl_easy_perform() failed: "
+						  << curl_easy_strerror(res) << std::endl;
 			}
 			else
 			{
