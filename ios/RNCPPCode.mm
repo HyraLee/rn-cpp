@@ -96,6 +96,20 @@ RCT_EXPORT_METHOD(setHeader:(NSString *)headerOptions
     }
 }
 
+RCT_EXPORT_METHOD(cancelRequest:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+{
+    @try {
+        bool result = v99core::cancelRequest();
+        NSNumber *resultNumber = [NSNumber numberWithBool:result];
+
+        resolve(resultNumber);
+    } @catch (NSException *exception) {
+        NSError *error = [[NSError alloc] initWithDomain:@"SET_HEADER_ERROR_DOMAIN" code:0 userInfo:@{NSLocalizedDescriptionKey: @"An error occurred during HTTP GET request"}];
+        reject(@"SET_HEADER_ERROR", @"An error occurred during SET HEADER request", error);
+    }
+}
+
 ////////////////////////////////////////////////////
 ////////////     V99 CORE APP           ////////////
 ////////////////////////////////////////////////////

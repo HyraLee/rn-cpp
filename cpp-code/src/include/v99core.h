@@ -6,6 +6,7 @@
 
 namespace v99core
 {
+  std::atomic<bool> cancelRequested(false);
   long multiply(long a, long b);
   size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userptr);
   struct curl_slist *headers = NULL;
@@ -16,9 +17,10 @@ namespace v99core
   std::string httpPost(std::string url, std::string params);
   std::string httpDelete(std::string url);
   bool setHeader(std::string headerOption);
+  bool cancelRequest();
 
   ////////////////////////////////////////////////////
-  //////////             CORE V99          ///////////
+  //////////             CORE V99    ///////////
   ////////////////////////////////////////////////////
   bool init(const std::string &appId, const std::string &secretKey);
   void on(const std::string &appId);

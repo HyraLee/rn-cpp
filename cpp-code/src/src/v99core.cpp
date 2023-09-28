@@ -8,6 +8,17 @@
 
 namespace v99core
 {
+
+	void cancelHttpRequest()
+	{
+		cancelRequested.store(true); // Set the cancellation flag
+	}
+
+	void openHttpRequest()
+	{
+		cancelRequested.store(false); // Set the open flag
+	}
+
 	long multiply(long a, long b)
 	{
 		return a * b;
@@ -71,9 +82,7 @@ namespace v99core
 		if (curl)
 		{
 			if (headers)
-			{
 				curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-			}
 
 			curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 			curl_easy_setopt(curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
@@ -93,6 +102,11 @@ namespace v99core
 			{
 				std::cerr << "HTTP GET: curl_easy_perform() failed: "
 						  << curl_easy_strerror(res) << std::endl;
+			}
+			else if (cancelRequested.load())
+			{
+				std::cerr << "HTTP GET: curl_easy_perform() failed: "
+						  << "request cancelled" << std::endl;
 			}
 			else
 			{
@@ -112,9 +126,7 @@ namespace v99core
 		if (curl)
 		{
 			if (headers)
-			{
 				curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-			}
 
 			curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 			curl_easy_setopt(curl, CURLOPT_POSTFIELDS, params.c_str());
@@ -131,10 +143,16 @@ namespace v99core
 			curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
 			CURLcode res = curl_easy_perform(curl);
+
 			if (res != CURLE_OK)
 			{
 				std::cerr << "HTTP GET: curl_easy_perform() failed: "
 						  << curl_easy_strerror(res) << std::endl;
+			}
+			else if (cancelRequested.load())
+			{
+				std::cerr << "HTTP GET: curl_easy_perform() failed: "
+						  << "request cancelled" << std::endl;
 			}
 			else
 			{
@@ -179,6 +197,12 @@ namespace v99core
 		}
 	}
 
+	bool cancelRequest()
+	{
+
+		return true;
+	}
+
 	std::string httpDelete(std::string url)
 	{
 		CURL *curl = curl_easy_init();
@@ -211,6 +235,11 @@ namespace v99core
 			{
 				std::cerr << "HTTP GET: curl_easy_perform() failed: "
 						  << curl_easy_strerror(res) << std::endl;
+			}
+			else if (cancelRequested.load())
+			{
+				std::cerr << "HTTP GET: curl_easy_perform() failed: "
+						  << "request cancelled" << std::endl;
 			}
 			else
 			{

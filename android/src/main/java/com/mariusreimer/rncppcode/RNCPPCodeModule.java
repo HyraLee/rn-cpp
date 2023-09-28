@@ -83,6 +83,10 @@ public final class RNCPPCodeModule
     promise.resolve(nativeHttpDelete(headerOptions));
   }
 
+  @ReactMethod
+  public void cancelRequest(Promise promise) {
+    promise.resolve(nativeCancelRequest());
+  }
   ////////////////////////////////////////////////////
   //////////             CORE V99          ///////////
   ////////////////////////////////////////////////////
